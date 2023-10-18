@@ -11,6 +11,19 @@ class LightBoardData {
 
   bool lightStateAt(int row, int col) => _lights[row][col];
 
+  bool get isWon {
+    bool result = true;
+    for (var line in _lights) {
+      for (var value in line) {
+        if (value == false) {
+          result = false;
+          break;
+        }
+      }
+    }
+    return result;
+  }
+
   void toggle(int row, int col) {
     _lights[row][col] = !_lights[row][col];
     if (row > 0) {
