@@ -43,6 +43,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   LightBoardData? _boardData;
+  int _actions = 0;
 
   @override
   void initState() {
@@ -52,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _onToggle(int row, int col) {
     setState(() {
+      _actions++;
       _boardData?.toggle(row, col);
     });
   }
@@ -78,6 +80,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: Text(
+              'Steps : $_actions',
+              style: const TextStyle(
+                fontSize: 30,
+                color: Colors.blue,
+              ),
+            ),
+          ),
           LightBoardWidget(
             boardData: _boardData ?? LightBoardData(4),
             onToggle: _onToggle,
