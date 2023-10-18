@@ -29,6 +29,18 @@ class _LightBoardWidgetState extends State<LightBoardWidget> {
   void _onToggle(int row, int col) {
     setState(() {
       lights[row][col] = !lights[row][col];
+      if (row > 0) {
+        lights[row-1][col] = !lights[row-1][col];
+      }
+      if (row < lightsPerSide - 1) {
+        lights[row+1][col] = !lights[row+1][col];
+      }
+      if (col > 0) {
+        lights[row][col-1] = !lights[row][col-1];
+      }
+      if (col < lightsPerSide - 1) {
+        lights[row][col+1] = !lights[row][col+1];
+      }
     });
   }
 
