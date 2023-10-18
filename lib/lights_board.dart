@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:light_them_all/light.dart';
 
+const singleLightSizePx = 120.0;
+
 class LightBoardWidget extends StatefulWidget {
   const LightBoardWidget({super.key});
 
@@ -9,25 +11,53 @@ class LightBoardWidget extends StatefulWidget {
 }
 
 class _LightBoardWidgetState extends State<LightBoardWidget> {
-  List<bool> lights = [true];
+  final lightsPerSide = 4;
+  var lights = [[]];
 
-  void _onToggle() {
+  @override
+  void initState() {
+    lights = List.generate(
+      lightsPerSide,
+      (index) => List.generate(
+        lightsPerSide,
+        (index) => false,
+      ),
+    );
+    super.initState();
+  }
+
+  void _onToggle(int row, int col) {
     setState(() {
-      lights[0] = ! lights[0];
+      lights[row][col] = !lights[row][col];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SizedBox(
-        width: 200,
-        height: 200,
-        child: LightWidget(
-          isOn: lights[0],
-          onToggle: _onToggle,
+    var lightsComps = <Widget>[];
+    for (var row = 0; row < lightsPerSide; row++) {
+      var line = <Widget>[];
+      for (var col = 0; col < lightsPerSide; col++) {
+        line.add(
+          SizedBox(
+            width: singleLightSizePx,
+            height: singleLightSizePx,
+            child: LightWidget(
+              isOn: lights[row][col],
+              onToggle: () => _onToggle(row, col),
+            ),
+          ),
+        );
+      }
+      lightsComps.add(
+        Row(
+          children: line,
         ),
-      ),
+      );
+    }
+
+    return Center(
+      child: Column(children: lightsComps),
     );
   }
 }
