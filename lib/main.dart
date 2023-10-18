@@ -58,6 +58,13 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _newGame() {
+    setState(() {
+      _actions = 0;
+      _boardData = LightBoardData(4);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +87,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: ElevatedButton(
+              onPressed: _newGame,
+              child: const Text(
+                'New game',
+                style: TextStyle(fontSize: 25.0),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 20.0),
             child: Text(
